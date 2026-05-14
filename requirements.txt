@@ -1,0 +1,15 @@
+seaborn
+nltk
+spacy
+torch
+streamlit
+joblib
+accelerate>=1.1.0
+mlflow
+dagshub
+torchvision
+python-multipart
+transformers
+pandas
+numpy
+scikit-learn
