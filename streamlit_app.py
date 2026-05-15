@@ -46,7 +46,7 @@ if uploaded_file is not None:
             try:
                 response = requests.post(
                     f"{API_URL}/predict/batch",
-                    files={"file": (uploaded_file.name, uploaded_file.getValue(), "text/csv")}
+                    files={"file": (uploaded_file.name, uploaded_file.getvalue(), "text/csv")}
                 )
                 
                 if response.status_code == 200:

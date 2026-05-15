@@ -1,3 +1,4 @@
+import io
 import logging
 from fastapi import FastAPI,UploadFile,File
 import pandas as pd
@@ -18,8 +19,7 @@ class TextRequest(BaseModel):
 #load the model at the start of the application as the API startup
 predictor = predict_sentiment()
 logging.info("Model loaded successfully at startup")
-app.post("/predict")
-
+@app.post("/predict")
 def predict_user_sentiment(request: TextRequest):
     try:
         logging.info(f"Received prediction request for text: {request.text}")
@@ -35,10 +35,10 @@ def predict_user_sentiment(request: TextRequest):
         logging.error(f"Error during prediction: {e}")
         return {"error": {str(e)}}
 
-app.post("/predict/batch")
+@app.post("/predict/batch")
 async def predict_batch(file: UploadFile = File(...)):
     content= await file.read()
-    df=pd.read_csv(io.stringIO(content.decode("utf-8")))
+    df=pd.read_csv(io.StringIO(content.decode("utf-8")))
     
     #check if the required column(review) exists
     if "review" not in df.columns:
@@ -70,7 +70,7 @@ async def predict_batch(file: UploadFile = File(...)):
         
          
         
-app.get("/train")
+@app.get("/train")
 def train_model():
     try:
         Train_model()
